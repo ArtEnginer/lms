@@ -1,0 +1,64 @@
+<?php
+include "header2.php";
+?>
+
+        <!-- about section start -->
+<section class="about">
+
+<div class="image">
+    <img src="pict/child.jpg" alt="">
+</div>
+
+<div class="content">
+    <h3> ENGLISH FOR CHILDREN </h3>
+    <p style="text-align: justify"> English for Children adalah program pelatihan Bahasa Inggris yang diperuntukan bagi pelajar SD fokus pada penguasaaan kosa kata, frasa serta ungkapan sederhana dalam komunikasi sehari-hari, baik di lingkungan sekolah maupun di rumah. Kurikulum dirancang sedemikian rupa dengan mempertimbangkan pertumbuhan kemapuan anak dalam menyerap bahasa Inggris. Kurikulum juga disesuaikan mengacu pada pelajaran di sekolah. Untuk membantu peserta menguasai materi dengan cepat dan mudah, BBC -ETS mengembangkan metode pembelajaran “Make English Easy” yang nyaman, santai, namun tetap fokus dan efektif. </p>
+        <p> 1. Menguasai kosa kata dan frasa serta ungkapan-ungkapan sederhana dalam komunikasi sehari-hari.
+            <br>
+            2. Membangun kebiasaan berbahasa Inggris.
+            <br>
+            3. Kurikulum inovatif sesuai perkembangan teknologi
+            <br>
+            4. Mempersiapkan kemampuan dasar bahasa Inggris untuk SMP.
+            <br>
+            5. Menanamkan karakter unggul seperti disiplin, 
+            tanggungjawab, kepedulian, percaya diri, ketakwaan, dll </p>
+
+            
+</div>
+</section>
+
+<h3 style="padding-left: 100px; padding-top: 10px; font-size: 20px"> Metode Pembelajaran </h3>
+<p style="padding-left: 100px; padding-top: 10px; padding-bottom: 20px; padding-right: 50px; font-size: 16px; text-align: justify">
+Pendekatan : Student-Centered
+<br>
+Metode :
+<br>
+<b>ENGAGE</b>
+<br>
+Engage merupakan tahap awal proses pembelajaran yang bertujuan untuk mempersiapkan dan membangkitkan motivasi siswa sebelum memulai pelajaran. Kegiatan “engage” dapat
+dilakukan melalui games, songs, energizers, anecdotes, pictures, dll.
+<br>
+<br>
+<b>STUDY</b>
+<br>
+Study adalah tahap mengenal dan melatihkan materi dengan strategi pembelajaran demonstration, simulation, pair work, group work , role play, dll. Siswa melakukan kegiatan latihan terbimbing (guided practice) menggunakan Alat Bantu Pembelajaran (ABP) seperti cards, flashcards, toys, realia, real objects, videos, projector, dll.*
+<br>
+<br>
+<b>ACTIVATE</b>
+<br>
+Activate merupakan tahap siswa mempraktikkan materi yang baru saja dipelajari dalam aktifitas role play, discussion, games, presentation, project work, dll. Hal ini sesuai dengan falsafah belajar, “the more you practice, the more you learn.”
+Teaching Aids : Card, Flashcard, realia, real object, video, projector, etc.
+<br>
+<br>
+Reinforcement :
+Point reward adalah point yang dapat diraih dan dikumpulkan siswa pada setiap sesi pembelajaran yang kemudian dapat ditukarkan dengan berbagai merchandise, digital money, dan pulsa telpon/paket internet, sesuai program pencairan point reward yang disediakan BBC. Beasiswa berupa diskon uang kursus bagi siswa-siswa yang berprestasi. Bahkan siswa dengan kriteria tertentu bisa diajukan untuk memperoleh beasiswa kuliah di Universitas Pertiwi
+</p>
+
+        <!-- about section end -->
+
+<?php
+include "footer.php";
+?>
+
+</body>
+</html>
