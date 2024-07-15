@@ -28,10 +28,13 @@ include "header2.php";
                     $datetime = new DateTime();
                     $now = $datetime->format('Y-m-d H:i:s');
 
-                    if ($row['post_schedule'] < $now) : ?>
+                    if ($now < $row['post_schedule']) : ?>
                         <div class="alert alert-warning" role="alert">
                             The schedule for this course has not yet arrived
-
+                        </div>
+                    <?php elseif ($now > $row['finish_schedule']) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            The schedule for this course has ended
                         </div>
                     <?php else : ?>
                         <?php

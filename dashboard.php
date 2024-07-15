@@ -126,10 +126,13 @@ include "header2.php";
           <h3> Structure TOEFL </h3>
           <p> <?= $row['materi_course'] ?></p>
           <?php
-          if ($row['post_schedule'] < $now) : ?>
+          if ($now < $row['post_schedule']) : ?>
             <div class="alert alert-warning" role="alert">
               The schedule for this course has not yet arrived
-
+            </div>
+          <?php elseif ($now > $row['finish_schedule']) : ?>
+            <div class="alert alert-danger" role="alert">
+              The schedule for this course has ended
             </div>
           <?php else : ?>
             <?php
