@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2024 at 10:08 PM
+-- Generation Time: Jul 15, 2024 at 07:44 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -42,6 +42,28 @@ CREATE TABLE `admin_login` (
 
 INSERT INTO `admin_login` (`id`, `nama`, `email`, `telpon`, `password`, `role`) VALUES
 (1, 'Admin', 'admin@gmail.com', '0987654321', 'admin', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `billing`
+--
+
+CREATE TABLE `billing` (
+  `id` int(12) NOT NULL,
+  `user_id` int(12) NOT NULL,
+  `materi_id` int(12) NOT NULL,
+  `price` varchar(255) DEFAULT NULL,
+  `file` varchar(255) DEFAULT NULL,
+  `status` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `billing`
+--
+
+INSERT INTO `billing` (`id`, `user_id`, `materi_id`, `price`, `file`, `status`) VALUES
+(5, 1, 20, '100000', '20240715064158Screenshot (1).png', 'approved');
 
 -- --------------------------------------------------------
 
@@ -102,28 +124,23 @@ CREATE TABLE `materi` (
   `id` int(11) NOT NULL,
   `materi_course` text NOT NULL,
   `judul` varchar(100) NOT NULL,
-  `category` varchar(100) NOT NULL
+  `category` varchar(100) NOT NULL,
+  `billing_type` enum('free','pay') DEFAULT NULL,
+  `price` varchar(255) DEFAULT NULL,
+  `post_schedule` datetime DEFAULT NULL,
+  `finish_schedule` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `materi`
 --
 
-INSERT INTO `materi` (`id`, `materi_course`, `judul`, `category`) VALUES
-(1, 'aaaaa', '', ''),
-(2, 'bbbb', '', ''),
-(6, 'dari 100 pulau kecil seperti Kepulauan Scilly dan Pulau Wight.\n\nWilayah yang saat ini bernama Inggris pertama kali dihuni oleh manusia modern selama periode Paleolitikum. Nama \"England\" berasal dari kata \"Angles\", yang merupakan salah satu suku Jermanik yang menetap di sana pada abad ke-5 dan ke-6. Inggris menjadi negara yang bersatu pada tahun 927 M, dan seja', '', ''),
-(8, '😎 \r\nhshsss', '', ''),
-(9, 'iyaaa', 'yakah', 'TOEFL'),
-(10, 'Berdasarkan penggunaannya, dibagi menjadi empat kategori utama, yaitu: Declarative sentence, Imperative sentence, Interrogative sentence, Exclamatory sentence. Berikut penjelasan terperinci serta masing-masing contoh dari jenis sentence tersebut.\r\n\r\nDeclarative sentence\r\n\r\nDeclarative sentences merupakan tipe kalimat untuk memberikan pernyataan, dapat berupa fakta ataupun opini, kalimat deklarasi ini biasanya diakhiri dengan tanda titik. Contoh dari kalimat declarative ini antara lain:\r\n\r\nHer new car is the newest models. (mobil barunya adalah model terbaru)\r\nLake Toba is located on North Sumatra, Indonesia. (danau Toba berada di Sumatra utara, Indonesia)\r\nImperative sentence\r\n\r\nImperative sentence merupakan kalimat untuk membuat permintaan, memberikan petunjuk atau perintah secara halus. Dalam penulisan, biasanya diakhiri dengan tanda seru atau diakhiri dengan tanda titik. Berikut contohnya:\r\n\r\nPlease go to the next cashier. (tolong ke kasir berikutnya)\r\nPlease put your wet umbrella on this basket. (Tolong letakkan payung basahmu di keranjang)', 'SENTENCE STRUCTURE ', 'TOEFL (Reading)'),
-(12, 'Interrogative sentence\r\n\r\nInterrogative sentence merupakan kalimat yang digunakan untuk memberi pertanyaan, biasanya kalimat ini diakhiri dengan tanda tanya. Contoh kalimat interrogative:\r\n\r\nAre you the member of applied science research group? (apakah kamu anggota dari kelompok penelitian ilmu terapan?)\r\nDo you have any questions? (apakah kamu punya beberapa pertanyaan)\r\nWhat are you doing during this long vacation? (Apa yang kamu lakukan selama liburan panjang ini?)\r\nWho are they? (siapakah mereka?)\r\nWhy do you like chocolate as that much? (mengapa kamu sangat suka coklat?)\r\nExclamatory sentence\r\n\r\nExclamatory sentence merupakan kalimat seruan yang menyatakan perasaan yang kuat. Sebagai kalimat seruan, Exclamatory sentence biasanya diakhiri dengan tanda seru. Berikut beberapa contoh kalimat exclamatory:\r\n\r\nWhat a beautiful beach! (betapa indanya pantai ini)\r\nThey are twins, but their character exactly opposite! (mereka kembar, tapi sifat mereka sangat berbeda)', 'huffft', 'TOEFL (Reading)'),
-(13, '', 'ini nyoba textbox', 'IELTS'),
-(14, '', 'hahahahaah', 'TOEFL'),
-(15, '[name]', 'hachuu', 'Array'),
-(16, '', 'huhuhu', 'Array'),
-(17, '', 'hiksss', 'KUIS'),
-(18, '', 'ayolaaa', 'IELTS'),
-(19, '', 'hmm', 'TOEFL');
+INSERT INTO `materi` (`id`, `materi_course`, `judul`, `category`, `billing_type`, `price`, `post_schedule`, `finish_schedule`) VALUES
+(6, 'dari 100 pulau kecil seperti Kepulauan Scilly dan Pulau Wight.\n\nWilayah yang saat ini bernama Inggris pertama kali dihuni oleh manusia modern selama periode Paleolitikum. Nama \"England\" berasal dari kata \"Angles\", yang merupakan salah satu suku Jermanik yang menetap di sana pada abad ke-5 dan ke-6. Inggris menjadi negara yang bersatu pada tahun 927 M, dan seja', '', '', NULL, NULL, NULL, NULL),
+(10, 'Berdasarkan penggunaannya, dibagi menjadi empat kategori utama, yaitu: Declarative sentence, Imperative sentence, Interrogative sentence, Exclamatory sentence. Berikut penjelasan terperinci serta masing-masing contoh dari jenis sentence tersebut.\r\n\r\nDeclarative sentence\r\n\r\nDeclarative sentences merupakan tipe kalimat untuk memberikan pernyataan, dapat berupa fakta ataupun opini, kalimat deklarasi ini biasanya diakhiri dengan tanda titik. Contoh dari kalimat declarative ini antara lain:\r\n\r\nHer new car is the newest models. (mobil barunya adalah model terbaru)\r\nLake Toba is located on North Sumatra, Indonesia. (danau Toba berada di Sumatra utara, Indonesia)\r\nImperative sentence\r\n\r\nImperative sentence merupakan kalimat untuk membuat permintaan, memberikan petunjuk atau perintah secara halus. Dalam penulisan, biasanya diakhiri dengan tanda seru atau diakhiri dengan tanda titik. Berikut contohnya:\r\n\r\nPlease go to the next cashier. (tolong ke kasir berikutnya)\r\nPlease put your wet umbrella on this basket. (Tolong letakkan payung basahmu di keranjang)', 'SENTENCE STRUCTURE ', 'TOEFL (Reading)', NULL, NULL, NULL, NULL),
+(12, 'Interrogative sentence\r\n\r\nInterrogative sentence merupakan kalimat yang digunakan untuk memberi pertanyaan, biasanya kalimat ini diakhiri dengan tanda tanya. Contoh kalimat interrogative:\r\n\r\nAre you the member of applied science research group? (apakah kamu anggota dari kelompok penelitian ilmu terapan?)\r\nDo you have any questions? (apakah kamu punya beberapa pertanyaan)\r\nWhat are you doing during this long vacation? (Apa yang kamu lakukan selama liburan panjang ini?)\r\nWho are they? (siapakah mereka?)\r\nWhy do you like chocolate as that much? (mengapa kamu sangat suka coklat?)\r\nExclamatory sentence\r\n\r\nExclamatory sentence merupakan kalimat seruan yang menyatakan perasaan yang kuat. Sebagai kalimat seruan, Exclamatory sentence biasanya diakhiri dengan tanda seru. Berikut beberapa contoh kalimat exclamatory:\r\n\r\nWhat a beautiful beach! (betapa indanya pantai ini)\r\nThey are twins, but their character exactly opposite! (mereka kembar, tapi sifat mereka sangat berbeda)', 'huffft', 'TOEFL (Reading)', NULL, NULL, NULL, NULL),
+(20, 'Berdasarkan penggunaannya, dibagi menjadi empat kategori utama, yaitu: Declarative sentence, Imperative sentence, Interrogative sentence, Exclamatory sentence. Berikut penjelasan terperinci serta masing-masing contoh dari jenis sentence tersebut. Declarative sentence Declarative sentences merupakan tipe kalimat untuk memberikan pernyataan, dapat berupa fakta ataupun opini, kalimat deklarasi ini biasanya diakhiri dengan tanda titik. Contoh dari kalimat declarative ini antara lain: Her new car is the newest models. (mobil barunya adalah model terbaru) Lake Toba is located on North Sumatra, Indonesia. (danau Toba berada di Sumatra utara, Indonesia) Imperative sentence Imperative sentence merupakan kalimat untuk membuat permintaan, memberikan petunjuk atau perintah secara halus. Dalam penulisan, biasanya diakhiri dengan tanda seru atau diakhiri dengan tanda titik. Berikut contohnya: Please go to the next cashier. (tolong ke kasir berikutnya) Please put your wet umbrella on this basket. (Tolong letakkan payung basahmu di keranjang)', 'TOEFL', 'TOEFL', 'pay', '100000', NULL, NULL),
+(22, 'SFGDSDF', '345G', 'FASDAF', 'pay', '100000', '2024-07-15 12:20:00', '2024-07-15 17:28:00');
 
 -- --------------------------------------------------------
 
@@ -200,6 +217,12 @@ ALTER TABLE `admin_login`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `billing`
+--
+ALTER TABLE `billing`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `exam_category`
 --
 ALTER TABLE `exam_category`
@@ -240,6 +263,12 @@ ALTER TABLE `admin_login`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `billing`
+--
+ALTER TABLE `billing`
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `exam_category`
 --
 ALTER TABLE `exam_category`
@@ -255,7 +284,7 @@ ALTER TABLE `hasil`
 -- AUTO_INCREMENT for table `materi`
 --
 ALTER TABLE `materi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `toefl`
