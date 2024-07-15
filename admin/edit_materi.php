@@ -2,21 +2,19 @@
 include "header.php";
 include "../konek.php";
 
-    $id=$_GET["id"];
+$id = $_GET["id"];
 
-    $materi_course="";
-    $judul="";
-    $category="";
+$materi_course = "";
+$judul = "";
+$category = "";
 
 
-    $res =mysqli_query($link, "SELECT * FROM materi WHERE id=$id");                                                                
-    while($row=mysqli_fetch_array($res))
-    {
-    $materi_course=$row["materi_course"];
-    $judul=$row["judul"];
-    $category=$row["category"];
-
-    }
+$res = mysqli_query($link, "SELECT * FROM materi WHERE id=$id");
+while ($row = mysqli_fetch_array($res)) {
+    $materi_course = $row["materi_course"];
+    $judul = $row["judul"];
+    $category = $row["category"];
+}
 ?>
 
 <div class="breadcrumbs" style="text-align:center">
@@ -27,7 +25,7 @@ include "../konek.php";
             </div>
         </div>
     </div>
-            <!-- <div class="col-sm-8">
+    <!-- <div class="col-sm-8">
                 <div class="page-header float-right">
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
@@ -46,61 +44,89 @@ include "../konek.php";
 
         <div class="row">
             <div class="col-lg-12" style="padding: 10px 200px 10px 200px;">
-                                             <!-- atas  kanan bawah  kiri  -->
+                <!-- atas  kanan bawah  kiri  -->
                 <div class="card">
                     <form name="form1" action="" method="post">
-                                <!-- <div class="card-header">
+                        <!-- <div class="card-header">
                                     <strong class="card-title">Credit Card</strong>
                                 </div> -->
                         <div class="card-body">
-                                <!-- Credit Card -->
+                            <!-- Credit Card -->
                             <div class="col-lg-6">
                                 <div class="card">
                                     <div class="card-header"><strong>Edit</strong><small> Category</small></div>
-                                        <div class="card-body card-block">
-                                           
-                                            <form action="" method="post">
-                                                <div class="form-group"><label for="company" class=" form-control-label">Edit the Category</label>
-                                                    <textarea type="text" name="category" placeholder="" class="form-control" value="<?php echo $category; ?>"></textarea></div>
-    
-                                                <div class="form-group"><label for="company" class=" form-control-label">Edit the Title</label>
-                                                    <textarea type="text" name="judul" placeholder="" class="form-control" value="<?php echo $judul; ?>"></textarea></div>
-    
-                                                <div class="form-group"><label for="company" class=" form-control-label">Edit the Course</label>
-                                                    <textarea type="text" name="materi_course" placeholder="" class="form-control" value="<?php echo $materi_course; ?>"></textarea></div>
-    
-                                                <br>
-                                                <div class="form-group">
-                                                    <input type="submit" name="submit1" value="Edit" class="btn btn-success"></input>
-                                                </div>
-                                            </form>
+                                    <div class="card-body card-block">
 
-                                        </div>
+                                        <form action="" method="post">
+                                            <div class="form-group"><label for="company" class=" form-control-label">Edit the Category</label>
+                                                <textarea type="text" name="category" placeholder="" class="form-control" value="<?php echo $category; ?>"></textarea>
+                                            </div>
+
+                                            <div class="form-group"><label for="company" class=" form-control-label">Edit the Title</label>
+                                                <textarea type="text" name="judul" placeholder="" class="form-control" value="<?php echo $judul; ?>"></textarea>
+                                            </div>
+
+                                            <div class="form-group"><label for="company" class=" form-control-label">Edit the Course</label>
+                                                <textarea type="text" name="materi_course" placeholder="" class="form-control" value="<?php echo $materi_course; ?>"></textarea>
+                                            </div>
+
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="billing_type" class="form-control-label">Billing Type</label>
+                                                        <select name="billing_type" id="billing_type" class="form-control">
+                                                            <option value="free">Free</option>
+                                                            <option value="pay">Pay</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group" id="price" style="display: none;">
+                                                        <label for="company" class="form-control-label">Price</label>
+                                                        <input type="text" name="price" placeholder="" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="submit" name="submit1" value="Edit" class="btn btn-success"></input>
+                                            </div>
+                                        </form>
+
                                     </div>
                                 </div>
+                            </div>
 
-                            </div> <!--/.card-body-->
-                            </form>
-                        </div><!-- .card -->                                              
-                    </div><!--/.col-->
-                </div><!-- .animated -->
+                        </div> <!--/.card-body-->
+                    </form>
+                </div><!-- .card -->
+            </div><!--/.col-->
+        </div><!-- .animated -->
 
-            </div><!-- .content -->
- 
-            
-<?php
-if(isset($_POST["submit1"]))
-{
-    mysqli_query($link, "UPDATE exam_category SET category='$_POST[examname]',exam_time='$_POST[examtime]' WHERE id=$id") or die(mysqli_error($link));
+    </div><!-- .content -->
 
-?>
+
+    <?php
+    if (isset($_POST["submit1"])) {
+        mysqli_query($link, "UPDATE exam_category SET category='$_POST[examname]',exam_time='$_POST[examtime]' WHERE id=$id") or die(mysqli_error($link));
+
+    ?>
         <script type="text/javascript">
-            window.location="exam_category.php";
+            window.location = "exam_category.php";
         </script>
-<?php
-}
-?> 
-
-<?php
-include "footer.php";
-?>                    
+    <?php
+    }
+    ?>
+    <script>
+        document.getElementById('billing_type').addEventListener('change', function() {
+            var priceField = document.getElementById('price');
+            if (this.value === 'pay') {
+                priceField.style.display = 'block';
+            } else {
+                priceField.style.display = 'none';
+            }
+        });
+    </script>
+    <?php
+    include "footer.php";
+    ?>
