@@ -15,22 +15,23 @@ include "header2.php";
         $page = ($course_page - 1) * 3;
         $pagination_courses = mysqli_query($link, "SELECT * FROM materi LIMIT $page, 3");
         while ($row = mysqli_fetch_array($pagination_courses)) :
+            $user_id = $_SESSION['id'];
+            $materi_id = $row['id'];
+            $billing_result = mysqli_query($link, "SELECT * FROM billing WHERE user_id = $user_id AND materi_id = $materi_id");
+            $billing = mysqli_fetch_assoc($billing_result);
+            $userschedule_result = mysqli_query($link, "SELECT * FROM schedule WHERE user_id = $user_id AND materi_id = $materi_id");
+            $schedule = mysqli_fetch_assoc($userschedule_result);
         ?>
             <div class="box">
                 <div class="image">
                     <img src="pict/toefl.png" alt="">
                 </div>
-                <div class="content">
-                    <h3><?= $row['judul'] ?></h3>
-                    <p class="text-truncate"><?= $row['materi_course'] ?></p>
-                    <?php
-                    if ($row['billing_type'] == 'pay') :
-                        $user_id = $_SESSION['id'];
-                        $materi_id = $row['id'];
-                        $result = mysqli_query($link, "SELECT * FROM billing WHERE user_id = $user_id AND materi_id = $materi_id");
-                        $billing = mysqli_fetch_assoc($result);
 
-                        if (!$billing) : ?>
+                <div class="content">
+                    <h3> Structure TOEFL </h3>
+                    <p> <?= $row['materi_course'] ?></p>
+                    <?php if ($row['billing_type'] == 'pay') : ?>
+                        <?php if (!$billing) : ?>
                             <a href="bayar.php?id=<?= $row['id'] ?>" class="btn btn-primary fs-3">Paying <span class="badge bg-danger">Rp. <?= $row['price'] ?></span></a>
                         <?php elseif ($billing['status'] == 'pending') : ?>
                             <div class="alert alert-warning" role="alert">
@@ -40,65 +41,44 @@ include "header2.php";
                             <div class="alert alert-success" role="alert">
                                 Your payment has been approved and processed
                             </div>
-
-                            <?php
-                            // Decode the JSON schedule array
-                            $schedule_array = json_decode($row['schedule'], true);
-                            $current_time = time(); // Get the current time
-                            $timenow = date('Y-m-d H:i:s');
-                            $userschedule = mysqli_query($link, "SELECT * FROM schedule WHERE user_id = $user_id AND materi_id = $materi_id");
-                            $schedule = mysqli_fetch_assoc($userschedule);
-
-
-                            if ($schedule) {
-                                $start = strtotime($schedule['start']);
-                                $end = strtotime($schedule['end']);
-
-                                if ($timenow >= $start) {
-                                    echo '<a href="materi.php?id=' . $row['id'] . '" class="btn btn-info fs-3">Read More</a>';
-                                } elseif ($timenow >= $end) {
-                                    echo '<div class="alert alert-info" role="alert">Your schedule has ended</div>';
-                                } else {
-                                    echo '<div class="alert alert-info" role="alert">You have not scheduled this materi yet</div>';
-                                }
-                            } else {
-
-                                if (is_array($schedule_array) && count($schedule_array) > 0) : ?>
-                                    <form method="POST" action="save_schedule.php">
-                                        <div class="form-group">
-                                            <label for="schedule">Choose a schedule:</label>
-                                            <select class="form-control text-center" id="schedule" name="schedule_id">
-                                                <?php foreach ($schedule_array as $index => $schedule) : ?>
-                                                    <option value="<?= $index ?>">
-                                                        <?= date('d M Y, H:i', strtotime($schedule['start'])) ?> - <?= date('d M Y, H:i', strtotime($schedule['end'])) ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                            <button type="submit" class="badge bg-primary w-100">Submit</button>
-                                        </div>
-                                        <input type="hidden" name="materi_id" value="<?= $materi_id ?>">
-                                        <input type="hidden" name="user_id" value="<?= $user_id ?>">
-                                    </form>
-
-                                    <?php foreach ($schedule_array as $schedule) :
-
-                                        if ($timenow >= strtotime($schedule['start'])) : ?>
-                                            <!-- <a href="materi.php?id=<?= $row['id'] ?>" class="btn btn-info fs-3">Read More</a> -->
-                                    <?php endif;
-                                    endforeach; ?>
-                                <?php else : ?>
-                                    <div class="alert alert-info" role="alert">
-                                        No schedules available for this materi.
-                                    </div>
-                            <?php endif;
-                            } ?>
-                        <?php else : ?>
-                            <a href="bayar.php?id=<?= $row['id'] ?>" class="btn btn-primary fs-3">Paying <span class="badge bg-danger">Rp. <?= $row['price'] ?></span></a>
                         <?php endif; ?>
                     <?php else : ?>
-                        <a href="materi.php?id=<?= $row['id'] ?>" class="btn btn-dark fs-3">
-                            Learn More <span class="badge bg-success">Free</span>
-                        </a>
+                    <?php endif; ?>
+
+                    <?php if ((isset($billing) && $billing['status'] == 'approved') || $row['billing_type'] == 'free') : ?>
+                        <?php if (!$schedule) :
+                            $schedule_array = json_decode($row['schedule'], true);
+                            if (is_array($schedule_array) && count($schedule_array) > 0) : ?>
+                                <form method="POST" action="save_schedule.php">
+                                    <div class="form-group">
+                                        <label for="schedule">Choose a schedule:</label>
+                                        <select class="form-control text-center" id="schedule" name="schedule_id">
+                                            <?php foreach ($schedule_array as $index => $schedule_option) : ?>
+                                                <option value="<?= $index ?>">
+                                                    <?= date('d M Y, H:i', strtotime($schedule_option['start'])) ?> - <?= date('d M Y, H:i', strtotime($schedule_option['end'])) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <button type="submit" class="badge bg-primary w-100">Submit</button>
+                                    </div>
+                                    <input type="hidden" name="materi_id" value="<?= $materi_id ?>">
+                                    <input type="hidden" name="user_id" value="<?= $user_id ?>">
+                                </form>
+                            <?php else : ?>
+                                <div class="alert alert-info" role="alert">
+                                    No schedules available for this materi.
+                                </div>
+                            <?php endif; ?>
+                        <?php else :
+                            $current_time = time();
+                            $start = strtotime($schedule['start']);
+                            $end = strtotime($schedule['end']);
+                            if ($current_time >= $start && $current_time <= $end) {
+                                echo '<a href="materi.php?id=' . $row['id'] . '" class="btn btn-info fs-3">Read More</a>';
+                            } else {
+                                echo '<div class="alert alert-info" role="alert"> There is no schedule available or expired for this materi</div>';
+                            }
+                        endif; ?>
                     <?php endif; ?>
                 </div>
             </div>
