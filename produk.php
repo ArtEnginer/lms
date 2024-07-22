@@ -70,14 +70,18 @@ include "header2.php";
                                 </div>
                             <?php endif; ?>
                         <?php else :
-                            $current_time = time();
+
+                            date_default_timezone_set('Asia/Jakarta');
+                            $current_time = strtotime(date('Y-m-d H:i:s'));
                             $start = strtotime($schedule['start']);
                             $end = strtotime($schedule['end']);
+
                             if ($current_time >= $start && $current_time <= $end) {
                                 echo '<a href="materi.php?id=' . $row['id'] . '" class="btn btn-info fs-3">Read More</a>';
                             } else {
                                 echo '<div class="alert alert-info" role="alert"> There is no schedule available or expired for this materi</div>';
                             }
+
                         endif; ?>
                     <?php endif; ?>
                 </div>
